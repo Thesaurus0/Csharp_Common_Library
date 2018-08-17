@@ -9,6 +9,8 @@ namespace CommonLib
 {
     public class ExcelUtil
     {
+        private Excel.Application _ExcelApp = null;
+
 
         public static Excel.Worksheet GetSheetBySheetName(string shtName, Excel.Workbook wb = null)
         {
@@ -19,8 +21,8 @@ namespace CommonLib
             return shtOut;
         }
 
-         
-        public static Excel.Range GetRangeByStartEndPos(Excel.Worksheet sht, long StartRow  , long StartCol, long EndRow, long EndCol )
+
+        public static Excel.Range GetRangeByStartEndPos(Excel.Worksheet sht, long StartRow, long StartCol, long EndRow, long EndCol)
         {
             Excel.Range rg = null;
 
@@ -32,6 +34,17 @@ namespace CommonLib
             rg = sht.Range[sht.Cells[StartRow, StartCol], sht.Cells[EndRow, EndCol]];
             return rg;
         }
+
+
+        private static Excel.Application GetExcelApplication()
+        {
+            Excel.Application xlApp = null;
+
+
+
+            return xlApp;
+        }
+
 
     }
 }
