@@ -306,6 +306,8 @@ namespace CommonLib
                         if (ComObject == null)
                             continue;
                         instances.Add(ComObject);
+
+                        //var v = typeof(   );
                         break;
                     }
                 }
