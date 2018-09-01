@@ -1,6 +1,0 @@
-F:\VSTO_Practice\CommonLib\bin\Debug\CommonLib.dll
-F:\VSTO_Practice\CommonLib\bin\Debug\CommonLib.pdb
-F:\VSTO_Practice\CommonLib\obj\Debug\CommonLib.csproj.CoreCompileInputs.cache
-F:\VSTO_Practice\CommonLib\obj\Debug\CommonLib.dll
-F:\VSTO_Practice\CommonLib\obj\Debug\CommonLib.pdb
-F:\VSTO_Practice\CommonLib\obj\Debug\CommonLib.csprojResolveAssemblyReference.cache
