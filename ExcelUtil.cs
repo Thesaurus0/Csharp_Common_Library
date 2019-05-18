@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace CommonLib
 {
-    public class ExcelUtil
+    public static class ExcelUtil
     {
         private const string SHEET_CODE_NAME = "SHEET_CODE_NAME";
 
@@ -32,6 +32,30 @@ namespace CommonLib
         #endregion
 
         #region workbook operation
+
+        public static Excel.Workbook OpenWorkbook(string excelFileFullPath, out bool AlreadyOpened, bool WhenOpenCloseItFirst = false, bool ReadOnly = true )
+        {
+            Excel.Workbook wb = null;
+            AlreadyOpened = false;
+
+            wb = GetWorkbook(excelFileFullPath);
+            if (wb != null)
+            {
+                if (wb.FullName.ToUpper().Equals(excelFileFullPath.Trim().ToUpper()))
+                    return wb;
+                else
+                {
+
+                }
+
+            }
+            else
+            {
+
+            }
+
+            return wb;
+        }
 
         public static Excel.Workbook CreateWorkbook(string excelFileFullPath, string sheetName = null)
         {
@@ -55,11 +79,52 @@ namespace CommonLib
             wb.SaveAs(Filename: excelFileFullPath, FileFormat: fileFormat);
             return wb;
         }
-
         public static Excel.Workbook GetActiveWorkbook()
         {
             return GetExcelApplication()?.ActiveWorkbook;
         }
+
+
+        public static Excel.Workbook GetWorkbook(string excelFileFullPath)
+        {
+            Excel.Workbook wb = null;
+
+            foreach (Excel.Application item in GetAllExcelApplicationInstances())
+            {
+                if (WorkbookExistsInExcelApplication(excelFileFullPath, out wb, item))
+                {
+                    break;
+                }
+            }
+            return null;
+        }
+
+
+        private static bool WorkbookExistsInExcelApplication(string excelFileName, out Excel.Workbook wb, Excel.Application xlApp = null)
+        {
+            string fileBaseName = Path.GetFileName(excelFileName).ToUpper();
+            wb = null;
+
+            if (xlApp == null)
+                xlApp = _ExcelApp ?? GetDefaultFirstApplication();
+
+            foreach (Excel.Workbook eachWb in xlApp.Workbooks)
+            {
+                if (eachWb.Name.ToUpper().Equals(fileBaseName))
+                {
+                    wb = eachWb;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        private static bool WorkbookExistsInExcelApplication(string excelFileName, Excel.Application xlApp = null)
+        {
+           Excel.Workbook wb = null;
+            return WorkbookExistsInExcelApplication(excelFileName, out wb, xlApp);
+        }
+
 
         private static Excel.XlFileFormat GetExcelFileFormatByFileExtension(string excelFileFullPath)
         {
@@ -127,7 +192,7 @@ namespace CommonLib
             }
             return null;
         }
-        public static Excel.Range GetRangeByStartEndPos(Excel.Worksheet sht, long StartRow, long StartCol, long EndRow, long EndCol)
+        public static Excel.Range GetRangeByStartEndPos(this Excel.Worksheet sht, long StartRow, long StartCol, long EndRow, long EndCol)
         {
             Excel.Range rg = null;
 
@@ -149,13 +214,9 @@ namespace CommonLib
             else
             {
                 if (_ExcelApp.Workbooks.Count > 0)
-                {
                     return _ExcelApp.ActiveWorkbook;
-                }
                 else
-                {
                     throw new ArgumentException("Parameter wb is null, and there is no actuve workbook available (in SetParamWbToAcitveWorkbookWhenItIsNull)");
-                }
             }
         }
 
@@ -409,7 +470,7 @@ namespace CommonLib
             }
             else
             {
-                if (!MultiInstanceThenGetTheDefault)
+                if (MultiInstanceThenGetTheDefault)
                 {
                     xlApp = GetDefaultFirstApplication();
                     xlApp.Visible = true;
