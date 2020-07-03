@@ -8,7 +8,6 @@ namespace CommonLib
 {
     public class SqlColumnNameAttribute:  System.Attribute
     {
-
         public SqlColumnNameAttribute(string sqlColumnName)
         {
             this._sqlColName = sqlColumnName;

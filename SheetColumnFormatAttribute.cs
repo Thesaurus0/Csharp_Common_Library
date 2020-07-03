@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CommonLib {
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple =false, Inherited =false)]
     public class SheetColumnFormatAttribute : System.Attribute {
         private string _format;
-
         public string ColumnFormat {
             get { return _format; }
         }

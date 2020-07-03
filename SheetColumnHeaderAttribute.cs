@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace CommonLib
 {
+    [AttributeUsage( AttributeTargets.Property, AllowMultiple =false, Inherited = false)]
     public class SheetColumnHeaderAttribute : System.Attribute
     {
         private string _header;
 
-        public string Header {
+        public string ColumnHeader {
             get { return _header; }
         }
 

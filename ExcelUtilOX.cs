@@ -38,20 +38,21 @@ namespace CommonLib
                     //      String.Format("RelationshipId:{0}\n SheetName:{1}\n SheetId:{2}"
                     //      , x.Id.Value, x.Name.Value, x.SheetId.Value)));
 
-                    res = doc.WorkbookPart.Workbook.Sheets.Cast<Sheet>().Select(a => a.Name.Value).ToArray();
+                    res = doc.WorkbookPart.Workbook.Sheets.Cast<Sheet>().Select(a => a.Name.Value);
                 }
             }
             catch (System.IO.FileFormatException ex) {
-                log.Error(ex.ToString());
+                //log.Error(ex.ToString());
                 throw ex;
             }
             catch (System.IO.FileNotFoundException ex)
             {
-                log.Error(ex.ToString());
+                //log.Error(ex.ToString());
                 throw ex;
             }
             catch (System.IO.IOException ex) {
-                log.Error(ex.ToString());
+                //log.Error(ex.ToString());
+                throw ex;
             }
             catch (Exception ex)
             {
